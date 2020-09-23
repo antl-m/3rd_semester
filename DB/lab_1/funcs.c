@@ -98,16 +98,15 @@ Progress get_progr_by_args(int key, const char *subj, int term) {
     return cur;
 }
 
-int get_progr_pos(int key, const char *subj, int term){
+int get_progr_pos(int key, const char *subj, int term) {
     Student student = get_stud_by_key(key);
     Progress cur = get_progr_by_pos(student.first_progress_pos);
     int ret = student.first_progress_pos;
     while (cur.term_num != term || strcmp(subj, cur.subject) != 0) {
-        if (cur.next_progress_pos > 0){
+        if (cur.next_progress_pos > 0) {
             ret = cur.next_progress_pos;
             cur = get_progr_by_pos(cur.next_progress_pos);
-        }
-        else {
+        } else {
             ret = INVALID_PROGR_MARK;
             break;
         }
@@ -158,6 +157,7 @@ void del_progr_by_args(int key, const char *subj, int term) {
     Progress info = get_progr_by_pos(-1);
     del.next_progress_pos = info.next_progress_pos;
     info.next_progress_pos = del_pos;
+    --info.mark;
     edit_progr_by_pos(del_pos, del);
     edit_progr_by_pos(-1, info);
 }
@@ -168,10 +168,11 @@ void del_all_progr_by_key(int key) {
     Progress info = get_progr_by_pos(-1);
     int empty_pos = info.next_progress_pos;
     info.next_progress_pos = stud.first_progress_pos;
+    info.mark = info.mark - progr_num_by_key(key);
     edit_progr_by_pos(-1, info);
-    stud.first_progress_pos = -1;
-    edit_stud_by_pos(get_ind_by_key(key).pos, stud);
     int pos = stud.first_progress_pos;
+    stud.first_progress_pos = -5;
+    edit_stud_by_pos(get_ind_by_key(key).pos, stud);
     while (progr.next_progress_pos >= 0) {
         pos = progr.next_progress_pos;
         progr = get_progr_by_pos(progr.next_progress_pos);
@@ -180,17 +181,40 @@ void del_all_progr_by_key(int key) {
     edit_progr_by_pos(pos, progr);
 }
 
+void files_clear() {
+    FILE *s_ind, *s_fl, *p_fl;
+    s_ind = fopen("S.ind", "wb");
+    Index ind = {0, 0};
+    fwrite(&ind, IND_SIZ, 1, s_ind);
+    fclose(s_ind);
+
+    s_fl = fopen("S.fl", "wb");
+    fclose(s_fl);
+
+    p_fl = fopen("P.fl", "wb");
+    Progress info = {0, "\0", 0, 0, 0, 0,
+                     "\0", 0};
+    fwrite(&info, PROGR_SIZ, 1, p_fl);
+    fclose(p_fl);
+}
+
+
 int del_stud_by_key(int key) {
     Index del = get_ind_by_key(key);
     if (del.key != key)
         return 0;
+    Index info = get_ind_by_pos(-1);
+    if(info.key == 1){
+        files_clear();
+        return 1;
+    }
     Student last_stud = get_stud_by_pos(num_of_inds() - 1);
-    del_all_progr_by_key(key);
+    if (get_stud_by_key(key).first_progress_pos >= 0)
+        del_all_progr_by_key(key);
     edit_stud_by_pos(del.pos, last_stud);
     Index last = get_ind_by_key(last_stud.gradebook_num);
     last.pos = del.pos;
     edit_ind_by_pos(ind_pos_by_key(last.key), last);
-    Index info = get_ind_by_pos(-1);
     int new_size = --info.key;
     edit_ind_by_pos(-1, info);
     int del_pos = ind_pos_by_key(del.key);
@@ -251,13 +275,14 @@ int num_of_progr() {
     Progress info;
     fread(&info, PROGR_SIZ, 1, f);
     fclose(f);
+//    printf("info.mark = %d\n", info.mark);
     return info.mark;
 }
 
 int insert_progr_by_key(int key, Progress progr) {
-    printf("insert progr start\n");
+//    printf("insert progr start\n");
     if (!is_key(key)) {
-        printf("insert progr return 0\n");
+//        printf("insert progr return 0\n");
         return 0;
     }
     Progress prev;
@@ -275,7 +300,7 @@ int insert_progr_by_key(int key, Progress progr) {
             prev = get_progr_by_pos(prev.next_progress_pos);
         }
         prev.next_progress_pos = info.next_progress_pos;
-        printf("prev: pos = %d, subj = %s, next = %d\n", prev_pos, prev.subject, prev.next_progress_pos);
+//        printf("prev: pos = %d, subj = %s, next = %d\n", prev_pos, prev.subject, prev.next_progress_pos);
         edit_progr_by_pos(prev_pos, prev);
     }
 
@@ -285,10 +310,10 @@ int insert_progr_by_key(int key, Progress progr) {
     } else {
         info.next_progress_pos = get_progr_by_pos(insert_pos).next_progress_pos;
     }
-    printf("insert: pos = %d, subj = %s, next = %d\n", insert_pos, progr.subject, progr.next_progress_pos);
+//    printf("insert: pos = %d, subj = %s, next = %d\n", insert_pos, progr.subject, progr.next_progress_pos);
     edit_progr_by_pos(insert_pos, progr);
     edit_progr_by_pos(-1, info);
-    printf("insert progr return 1\n");
+//    printf("insert progr return 1\n");
     return 1;
 }
 
@@ -336,7 +361,8 @@ void help(FILE *out) {
 void dump(FILE *out) {
     //printf("dump start\n");
     int siz = num_of_inds();
-    fprintf(out, "Size = %d\n", siz);
+    int progr_siz = num_of_progr();
+    fprintf(out, "Num of students = %d\nNum of progresses = %d\n", siz, progr_siz);
     for (int i = 0; i < siz; ++i) {
         Index cur_ind = get_ind_by_pos(i);
         Student cur_stud = get_stud_by_pos(cur_ind.pos);
@@ -374,4 +400,16 @@ void print_progr(FILE *out, Progress progr) {
             progr.subject,
             progr.term_num, progr.mark, progr.teacher_last_name, progr.exam_date.day,
             progr.exam_date.month, progr.exam_date.year);
+}
+
+int progr_num_by_key(int key) {
+    if (!is_key(key))
+        return -1;
+    int pos = get_stud_by_key(key).first_progress_pos;
+    int res = 0;
+    while (pos >= 0) {
+        pos = get_progr_by_pos(pos).next_progress_pos;
+        ++res;
+    }
+    return res;
 }

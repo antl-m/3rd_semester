@@ -69,6 +69,7 @@ void dump(FILE* out);
 void print_stud(FILE *out,Student stud);
 void print_progr(FILE *out,Progress progr);
 int get_progr_pos(int key, const char *subj, int term);
+int progr_num_by_key(int key);
 
 
 #endif //LAB_1_STRUCTS_H
