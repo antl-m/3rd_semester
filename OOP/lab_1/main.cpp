@@ -1,21 +1,27 @@
 #include <iostream>
-#include "test_runner.h"
-
-class A {
-public:
-    A() {
-        static int counter = 0;
-        std::cout << ++counter << " objects became" << std::endl;
-    }
-    ~A(){
-        static int counter;
-        std::cout << --counter << " objects left" << std::endl;
-    }
-};
+#include <iomanip>
+#include <memory>
+#include "Book.h"
+#include "Graph.h"
 
 int main() {
-    std::cout << -3%2 <<std::endl;
-    A a;
-    A b;
+    MatrixGraph<int, int> g;
+    g.push_vertex(1);
+    g.push_vertex(2);
+    g.push_vertex(3);
+    g.push_vertex(4);
+    g.push_vertex(5);
+    g.push_vertex(6);
+    g.push_edge(5, 1, 4);
+    g.push_edge(1, 3, 4);
+    g.push_edge(2, 3, 5);
+    g.push_edge(1, 4, 6);
+    std::cout << std::boolalpha << g.connectivity() << std::endl;
+    g.push_edge(20,1, 2);
+    std::cout << g.connectivity() << std::endl;
+    std::cout << g.length(1, 2)[0] << std::endl;
+//    g.push_edge(1,6, 2);
+//    std::cout << g.length(1, 2)[0] << std::endl;
+
     return 0;
 }
