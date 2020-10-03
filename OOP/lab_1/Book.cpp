@@ -30,6 +30,18 @@ void BookSeries::insert_book(const Book &book) {
     data.push_vertex(book);
 }
 
+void BookSeries::insert_character(const Character &character, const Book &book1, const Book &book2) {
+    auto char_books = character.main_books();
+    if (char_books.count(book1) && char_books.count(book2)) {
+        data.push_edge(character, book1, book2);
+        return;
+    }
+    std::stringstream message;
+    message << "insert_character: books " << book1 << " and " << book2
+            << " aren't connected with character " << character << ".";
+    throw std::logic_error(message.str());
+}
+
 std::set<Book> Character::main_books() const {
     std::set<Book> res;
     for(const auto& [book, lvl]: book_to_plevel){

@@ -1,5 +1,5 @@
-#ifndef LAB_1_STL_OSTREAM_H
-#define LAB_1_STL_OSTREAM_H
+#ifndef STL_OSTREAM_H
+#define STL_OSTREAM_H
 
 #include <ostream>
 #include <vector>
@@ -39,4 +39,4 @@ std::ostream &operator<<(std::ostream &out, const std::map<K, V> &m) {
 }
 
 
-#endif //LAB_1_STL_OSTREAM_H
+#endif //STL_OSTREAM_H

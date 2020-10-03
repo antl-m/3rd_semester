@@ -15,7 +15,7 @@
 
 class GraphExc : public std::logic_error {
 public:
-    explicit GraphExc(const std::string &message);
+    explicit GraphExc(const std::string &message) : std::logic_error(message){}
 };
 
 template<typename V, typename E>

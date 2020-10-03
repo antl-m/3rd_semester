@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BOOK_H
+#define BOOK_H
 
 #include <iostream>
 #include <iomanip>
@@ -31,9 +32,6 @@ private:
 };
 
 
-
-//bool operator<(const Book& lhs, const Book& rhs);
-
 enum class PartLevel {
     MAIN,
     MINOR,
@@ -58,18 +56,10 @@ class BookSeries {
 public:
     void insert_book(const Book &book);
 
-    void insert_character(const Character &character, const Book &book1, const Book &book2) {
-        auto char_books = character.main_books();
-        if (char_books.count(book1) && char_books.count(book2)) {
-            data.push_edge(character, book1, book2);
-            return;
-        }
-        std::stringstream message;
-        message << "insert_character: books " << book1 << " and " << book2
-                << " aren't connected with character " << character << ".";
-        throw std::logic_error(message.str());
-    }
+    void insert_character(const Character &character, const Book &book1, const Book &book2);
 
 private:
     MatrixGraph<Book, Character> data;
 };
+
+#endif //BOOK_H
