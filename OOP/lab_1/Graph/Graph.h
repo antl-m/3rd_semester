@@ -11,6 +11,7 @@
 #include <type_traits>
 #include <algorithm>
 #include "../includes/Bool.h"
+#include "../includes/stl_ostream.h"
 
 
 class GraphExc : public std::logic_error {
@@ -98,7 +99,13 @@ public:
 
     virtual std::size_t size() const = 0;
 
+    friend std::ostream& operator<<(std::ostream& out, const Graph<V, E>& g){
+        return g._print(out);
+    }
+
 protected:
+
+    virtual std::ostream& _print(std::ostream& out) const = 0;
 
     virtual V _get_by_pos(std::size_t pos) const = 0;
 
@@ -138,6 +145,11 @@ bool Graph<V, E>::connectivity() const {
     return used.size() == size();
 }
 
+//template <typename V, typename E>
+//std::ostream &operator<<(std::ostream &out, const Graph<V, E> &g) {
+//    return g._print(out);
+//}
+
 
 template<class V, class E>
 class MatrixStruct : public std::map<V, std::map<V, E>> {
@@ -154,6 +166,8 @@ public:
     std::size_t size() const override;
 
 private:
+
+    std::ostream& _print(std::ostream& out) const override;
 
     V _get_by_pos(std::size_t pos) const override;
 
@@ -186,6 +200,7 @@ void MatrixGraph<V, E>::push_edge(const E &e, const V &v1, const V &v2) {
 template<class V, class E>
 void MatrixGraph<V, E>::push_vertex(const V &v) {
     verts.insert(v);
+    matrx[v];
 }
 
 template<class V, class E>
@@ -244,6 +259,11 @@ std::size_t MatrixGraph<V, E>::size() const {
     return verts.size();
 }
 
+template<class V, class E>
+std::ostream &MatrixGraph<V, E>::_print(std::ostream &out) const {
+    return out << matrx;
+}
+
 
 template<class V, class E>
 struct Node {
@@ -255,6 +275,11 @@ struct Node {
 template<class V, class E>
 bool operator<(const Node<V, E> &lhs, const Node<V, E> &rhs) {
     return lhs.vertex < rhs.vertex;
+}
+
+template<class V, class E>
+std::ostream& operator<<(std::ostream& out, const Node<V, E> &n) {
+    return out << "(" << n.vertex << ", " << n.edge<<")";
 }
 
 template<class V, class E>
@@ -270,6 +295,8 @@ public:
     void push_vertex(const V &v) override;
 
 private:
+    std::ostream& _print(std::ostream& out) const override;
+
     V _get_by_pos(std::size_t pos) const;
 
     std::size_t _count_adjacent_to_v(const V &v) const;
@@ -367,6 +394,11 @@ E LinkedGraph<V, E>::_edge_of(const V &v1, const V &v2) const {
 template<class V, class E>
 std::size_t LinkedGraph<V, E>::size() const {
     return link_struct.size();
+}
+
+template<class V, class E>
+std::ostream &LinkedGraph<V, E>::_print(std::ostream &out) const {
+    return out << link_struct;
 }
 
 

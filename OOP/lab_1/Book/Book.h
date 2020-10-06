@@ -52,14 +52,14 @@ private:
     std::map<Book, PartLevel> book_to_plevel;
 };
 
-class BookSeries {
+class BookSeries : public MatrixGraph<Book, Character>{
 public:
     void insert_book(const Book &book);
 
     void insert_character(const Character &character, const Book &book1, const Book &book2);
-
 private:
-    MatrixGraph<Book, Character> data;
+    using MatrixGraph<Book, Character>::push_vertex;
+    using MatrixGraph<Book, Character>::push_edge;
 };
 
 #endif //BOOK_H

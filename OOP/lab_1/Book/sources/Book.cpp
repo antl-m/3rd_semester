@@ -27,13 +27,13 @@ std::ostream &operator<<(std::ostream &out, const tm &t) {
 }
 
 void BookSeries::insert_book(const Book &book) {
-    data.push_vertex(book);
+    push_vertex(book);
 }
 
 void BookSeries::insert_character(const Character &character, const Book &book1, const Book &book2) {
     auto char_books = character.main_books();
     if (char_books.count(book1) && char_books.count(book2)) {
-        data.push_edge(character, book1, book2);
+        push_edge(character, book1, book2);
         return;
     }
     std::stringstream message;

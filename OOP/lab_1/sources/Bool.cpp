@@ -1,4 +1,4 @@
-#include "includes/Bool.h"
+#include "../includes/Bool.h"
 
 Bool &Bool::operator=(bool val) {
     _value = val;

@@ -22,6 +22,22 @@ std::ostream &operator<<(std::ostream &out, const std::set<T> &s) {
     return out;
 }
 
+template <typename T>
+std::ostream &operator<<(std::ostream &out, const std::vector<T> &v) {
+    out << "[ ";
+    bool first = true;
+    for (const auto &item: v) {
+        if (first) {
+            out << item;
+            first = false;
+        } else {
+            out << ", " << item;
+        }
+    }
+    out << " ]";
+    return out;
+}
+
 template<typename K, typename V>
 std::ostream &operator<<(std::ostream &out, const std::map<K, V> &m) {
     out << "{ ";

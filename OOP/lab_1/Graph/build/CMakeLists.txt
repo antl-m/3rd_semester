@@ -6,10 +6,13 @@ set (PROJECT
 set (HEADERS 
 	../Graph.h)
 
-set (SOURCES)
+set (SOURCES
+	../../sources/Bool.cpp)
 
 set (TESTS_SOURCES
-	../tests/test.cpp)
+	../tests/MatrixGraphTests.cpp
+	../tests/LinkedGraphTests.cpp
+	../tests/runner.cpp)
 
 project (${PROJECT})
 
