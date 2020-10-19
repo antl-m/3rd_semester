@@ -10,7 +10,7 @@ set (SOURCES
 	../sources/Book.cpp)
 
 set (TESTS_SOURCES
-	../tests/test.cpp)
+        ../tests/runner.cpp)
 
 project (${PROJECT})
 
