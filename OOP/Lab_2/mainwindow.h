@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QDateTime>
+#include <QListWidgetItem>
+#include <QSound>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,11 +24,13 @@ private slots:
 
     void on_AlarmBox_stateChanged(int arg1);
 
-    void update_startedList(){
-        return;
-    }
+    void update_startedList();
+
+    void on_AddedList_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     QTimer* timer;
+    QSound* sound;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

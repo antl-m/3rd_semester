@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    sound = new QSound(":/sounds/alarm.wav");
+
     timer = new QTimer(this);
     timer->setInterval(1000);
     connect(timer, SIGNAL(timeout()), this, SLOT(update_startedList()));
@@ -36,4 +38,27 @@ void MainWindow::on_AddButton_clicked()
 void MainWindow::on_AlarmBox_stateChanged(int arg1)
 {
     ui->dateEdit->setEnabled(arg1);
+}
+
+void MainWindow::on_AddedList_itemDoubleClicked(QListWidgetItem *item)
+{
+    ui->StartedList->addItem(item->text());
+    delete item;
+}
+
+void MainWindow::update_startedList(){
+    bool timeout = false;
+    for(int i=0; i<ui->StartedList->count(); ++i){
+        auto cur_item = ui->StartedList->item(i);
+        auto item_datetime = QDateTime::fromString(cur_item->text());
+        if(QDateTime::currentDateTime() >= item_datetime){
+            cur_item->setBackground(QColor("Red"));
+            sound->play();
+            timeout = true;
+        }
+    }
+    if(!sound->isFinished()){
+        if(!timeout)
+            sound->stop();
+    }
 }
