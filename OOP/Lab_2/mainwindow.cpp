@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    sound = new QSound(":/sounds/alarm.wav");
+    sound = new QSound(":/sounds/alarm_ph.wav");
+//    sound->setLoops(QSound::Infinite);
 
     timer = new QTimer(this);
     timer->setInterval(1000);
@@ -53,12 +54,28 @@ void MainWindow::update_startedList(){
         auto item_datetime = QDateTime::fromString(cur_item->text());
         if(QDateTime::currentDateTime() >= item_datetime){
             cur_item->setBackground(QColor("Red"));
-            sound->play();
+            if(sound->isFinished())
+                sound->play();
             timeout = true;
         }
     }
     if(!sound->isFinished()){
         if(!timeout)
             sound->stop();
+    }
+}
+
+void MainWindow::on_StartedList_itemDoubleClicked(QListWidgetItem *item)
+{
+    if(QDateTime::currentDateTime() < QDateTime::fromString(item->text())){
+        ui->AddedList->addItem(item->text());
+    }
+    delete item;
+}
+
+void MainWindow::on_DeleteButton_clicked()
+{
+    for(auto item: ui->AddedList->selectedItems()){
+        delete item;
     }
 }

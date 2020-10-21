@@ -65,6 +65,10 @@ public:
         AddButton->setSizePolicy(sizePolicy);
         AddButton->setMinimumSize(QSize(90, 90));
         AddButton->setBaseSize(QSize(0, 0));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Times New Roman"));
+        font.setPointSize(25);
+        AddButton->setFont(font);
         AddButton->setAutoFillBackground(false);
         AddButton->setIconSize(QSize(20, 20));
         AddButton->setAutoDefault(false);
@@ -77,6 +81,10 @@ public:
         sizePolicy.setHeightForWidth(DeleteButton->sizePolicy().hasHeightForWidth());
         DeleteButton->setSizePolicy(sizePolicy);
         DeleteButton->setMinimumSize(QSize(90, 90));
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("Times New Roman"));
+        font1.setPointSize(20);
+        DeleteButton->setFont(font1);
 
         verticalLayout->addWidget(DeleteButton);
 
@@ -86,10 +94,10 @@ public:
         timeEdit = new QTimeEdit(centralwidget);
         timeEdit->setObjectName(QString::fromUtf8("timeEdit"));
         timeEdit->setMinimumSize(QSize(0, 40));
-        QFont font;
-        font.setFamily(QString::fromUtf8("Times New Roman"));
-        font.setPointSize(16);
-        timeEdit->setFont(font);
+        QFont font2;
+        font2.setFamily(QString::fromUtf8("Times New Roman"));
+        font2.setPointSize(16);
+        timeEdit->setFont(font2);
 
         gridLayout->addWidget(timeEdit, 0, 1, 1, 1);
 
@@ -97,7 +105,7 @@ public:
         dateEdit->setObjectName(QString::fromUtf8("dateEdit"));
         dateEdit->setEnabled(false);
         dateEdit->setMinimumSize(QSize(0, 40));
-        dateEdit->setFont(font);
+        dateEdit->setFont(font2);
         dateEdit->setDateTime(QDateTime(QDate(2020, 1, 1), QTime(0, 0, 0)));
         dateEdit->setMinimumDateTime(QDateTime(QDate(2020, 1, 1), QTime(0, 0, 0)));
 
@@ -106,22 +114,22 @@ public:
         AlarmBox = new QCheckBox(centralwidget);
         AlarmBox->setObjectName(QString::fromUtf8("AlarmBox"));
         AlarmBox->setMinimumSize(QSize(0, 40));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Times New Roman"));
-        font1.setPointSize(15);
-        AlarmBox->setFont(font1);
+        QFont font3;
+        font3.setFamily(QString::fromUtf8("Times New Roman"));
+        font3.setPointSize(15);
+        AlarmBox->setFont(font3);
 
         gridLayout->addWidget(AlarmBox, 0, 2, 1, 1);
 
         AddedList = new QListWidget(centralwidget);
         AddedList->setObjectName(QString::fromUtf8("AddedList"));
-        AddedList->setFont(font1);
+        AddedList->setFont(font3);
 
         gridLayout->addWidget(AddedList, 1, 1, 1, 1);
 
         StartedList = new QListWidget(centralwidget);
         StartedList->setObjectName(QString::fromUtf8("StartedList"));
-        StartedList->setFont(font1);
+        StartedList->setFont(font3);
 
         gridLayout->addWidget(StartedList, 1, 3, 1, 1);
 

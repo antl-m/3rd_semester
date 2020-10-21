@@ -28,6 +28,10 @@ private slots:
 
     void on_AddedList_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_StartedList_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_DeleteButton_clicked();
+
 private:
     QTimer* timer;
     QSound* sound;
