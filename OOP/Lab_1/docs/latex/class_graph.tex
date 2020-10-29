@@ -1,0 +1,58 @@
+\hypertarget{class_graph}{}\doxysection{Graph$<$ V, E $>$ Class Template Reference}
+\label{class_graph}\index{Graph$<$ V, E $>$@{Graph$<$ V, E $>$}}
+Inheritance diagram for Graph$<$ V, E $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_aa4f3c9264a851990a4a227ef30e6a6d3}\label{class_graph_aa4f3c9264a851990a4a227ef30e6a6d3}} 
+virtual void {\bfseries push\+\_\+edge} (const E \&e, const V \&v1, const V \&v2)=0
+\item 
+\mbox{\Hypertarget{class_graph_ac56b6a63a2c1672cecac69023d6dce2e}\label{class_graph_ac56b6a63a2c1672cecac69023d6dce2e}} 
+virtual void {\bfseries push\+\_\+vertex} (const V \&v)=0
+\item 
+\mbox{\Hypertarget{class_graph_a55360dd02039fb94234aa5ea2425cf6f}\label{class_graph_a55360dd02039fb94234aa5ea2425cf6f}} 
+bool {\bfseries connectivity} () const
+\item 
+\mbox{\Hypertarget{class_graph_a685119db1a7afd2d23645dd40dbfc163}\label{class_graph_a685119db1a7afd2d23645dd40dbfc163}} 
+std\+::vector$<$ E $>$ {\bfseries length} (const V \&v1, const V \&v2) const
+\item 
+\mbox{\Hypertarget{class_graph_ab9c6afb7b52f7dba87b16ac538542040}\label{class_graph_ab9c6afb7b52f7dba87b16ac538542040}} 
+virtual std\+::size\+\_\+t {\bfseries size} () const =0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_a83a12ed651549718c005d7fa853424c2}\label{class_graph_a83a12ed651549718c005d7fa853424c2}} 
+virtual std\+::ostream \& {\bfseries \+\_\+print} (std\+::ostream \&out) const =0
+\item 
+\mbox{\Hypertarget{class_graph_a274249466c646ee86896358fcf91d9e3}\label{class_graph_a274249466c646ee86896358fcf91d9e3}} 
+virtual V {\bfseries \+\_\+get\+\_\+by\+\_\+pos} (std\+::size\+\_\+t pos) const =0
+\item 
+\mbox{\Hypertarget{class_graph_a6549f1a9a395428675debcdebcad84ee}\label{class_graph_a6549f1a9a395428675debcdebcad84ee}} 
+virtual std\+::size\+\_\+t {\bfseries \+\_\+count\+\_\+adjacent\+\_\+to\+\_\+v} (const V \&v) const =0
+\item 
+\mbox{\Hypertarget{class_graph_a5eef061704dd127ff0e5620d31295e5a}\label{class_graph_a5eef061704dd127ff0e5620d31295e5a}} 
+virtual V {\bfseries \+\_\+adjacent\+\_\+to\+\_\+v\+\_\+by\+\_\+pos} (const V \&v, std\+::size\+\_\+t pos) const =0
+\item 
+\mbox{\Hypertarget{class_graph_a9bcdebcbcf68888fdf56fa374ff17599}\label{class_graph_a9bcdebcbcf68888fdf56fa374ff17599}} 
+virtual E {\bfseries \+\_\+edge\+\_\+of} (const V \&v1, const V \&v2) const =0
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_graph_a06784ea720a7085ada89e50743b9eeaa}\label{class_graph_a06784ea720a7085ada89e50743b9eeaa}} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&out, const \mbox{\hyperlink{class_graph}{Graph}}$<$ V, E $>$ \&g)
+\item 
+\mbox{\Hypertarget{class_graph_a5a3bcc7b619d599766eb8601f88749af}\label{class_graph_a5a3bcc7b619d599766eb8601f88749af}} 
+std\+::vector$<$ E $>$ {\bfseries Graph\+Impl\+Namespace\+::\+\_\+length\+\_\+func} (const \mbox{\hyperlink{class_graph}{Graph}}$<$ V, E $>$ $\ast$this\+\_\+p, const V \&v1, const V \&v2)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Graph/Graph.\+h\end{DoxyCompactItemize}
