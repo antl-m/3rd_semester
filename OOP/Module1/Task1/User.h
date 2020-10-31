@@ -32,6 +32,8 @@ namespace SocialNet {
         }
 
     private:
+        friend class Server;
+
         const UserId id;
         std::string name, surname;
         std::unordered_set<UserId> friends;

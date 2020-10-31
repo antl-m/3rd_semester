@@ -1,6 +1,8 @@
 #include "Server.h"
 
 #include <exception>
+#include <unordered_map>
+#include <queue>
 
 namespace SocialNet {
 
@@ -20,6 +22,14 @@ namespace SocialNet {
         if(id < 0 || id >= posts.size())
             throw std::invalid_argument(std::move(message) +
                                         ": Post with id = " + std::to_string(id) + " doesn't exist");
+    }
+
+    void Server::UserAddFriend(UserId user_id, UserId friend_id) {
+        check_user_id(user_id, "UserAddFriend");
+        check_user_id(friend_id, "UserAddFriend");
+
+        users[user_id].friends.insert(friend_id);
+        users[friend_id].friends.insert(user_id);
     }
 
     PostId Server::UserAddPost(UserId author_id, std::string content, std::unordered_set<Theme> themes,
@@ -66,6 +76,28 @@ namespace SocialNet {
 
         users[user_id].AddDisliked(post_id);
         --posts[post_id].rating;
+    }
+
+    std::vector<UserId> Server::ShortestWay(UserId beg, UserId end) const {
+        std::unordered_map<UserId, std::vector<UserId>> v_to_dist;
+        std::unordered_map<UserId, bool> v_to_mark;
+        std::queue<UserId> q;
+        q.push(beg);
+        while (!q.empty()) {
+            const UserId cur = q.front();
+            q.pop();
+            for (const UserId adj: users[cur].friends){
+                if (!v_to_mark[adj]) {
+                    v_to_mark[adj] = true;
+                    q.push(adj);
+                }
+                auto cur_dist = v_to_dist[cur];
+                cur_dist.push_back(adj);
+                if (v_to_dist[adj].empty() || cur_dist.size() < v_to_dist[adj].size())
+                    v_to_dist[adj] = cur_dist;
+            }
+        }
+        return v_to_dist[end];
     }
 
 } //namespace SocialNet

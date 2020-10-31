@@ -14,6 +14,8 @@ namespace SocialNet {
 
         UserId AddUser(std::string name, std::string surname);
 
+        void UserAddFriend(UserId user_id, UserId friend_id);
+
         PostId UserAddPost(UserId author_id, std::string content,
                            std::unordered_set<Theme> themes,
                            std::unordered_set<UserId> users_ref = {},
