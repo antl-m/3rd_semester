@@ -5,11 +5,21 @@ set(CMAKE_CXX_STANDARD 17)
 set (PROJECT 
 	module1_task1)
 
-set (HEADERS)
+set (HEADERS
+		../User.h
+		../Theme.h
+		../Post.h
+		../Server.h)
 
-set (SOURCES)
+set (SOURCES
+		../User.cpp
+		../Theme.cpp
+		../Post.cpp
+		../Server.cpp)
 
-set (TESTS_SOURCES)
+set (TESTS_SOURCES
+		../tests/test_main.cpp
+		../tests/test_file.cpp)
 
 project (${PROJECT})
 
@@ -26,12 +36,12 @@ if (TESTS_SOURCES)
 	include_directories(${Boost_INCLUDE_DIRS})
 	set (TEST test_${PROJECT})
 	add_executable (${TEST} ${TESTS_SOURCES})
-	target_link_libraries (${TEST} ${PROJECT} ${Boost_LIBRARIES})
+	set_target_properties(${TEST} PROPERTIES LINKER_LANGUAGE CXX)
+	target_link_libraries (${TEST} ${Boost_LIBRARIES})
 	enable_testing ()
 	add_test (${TEST} ${TEST})
-else ()
-    add_executable (${PROJECT} ${HEADERS} ${SOURCES})
 endif()
+add_executable (${PROJECT} ${HEADERS} ${SOURCES})
 set_target_properties(${PROJECT} PROPERTIES LINKER_LANGUAGE CXX)
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
