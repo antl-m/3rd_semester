@@ -1,5 +1,22 @@
 #include "../Server.h"
 
+#include <iostream>
+
+
+std::ostream& operator<<(std::ostream& out, const std::vector<std::size_t>& container){
+    bool first = true;
+    for (const auto &item : container) {
+        if(first){
+            out << '[';
+            first = false;
+        }else{
+            out << ", ";
+        }
+        out << item;
+    }
+    return out <<']';
+}
+
 #include "boost/test/unit_test.hpp"
 
 BOOST_AUTO_TEST_SUITE(TestShortestWay);
@@ -16,10 +33,10 @@ BOOST_AUTO_TEST_SUITE(TestShortestWay);
         s.UserAddFriend(tolik_id, yegor_id);
         s.UserAddFriend(dima_id, yegor_id);
         s.UserAddFriend(dima_id, arkash_id);
-        for (const auto &item : s.ShortestWay(tolik_id, yegor_id)) {
-            std::cout << item << ' ';
-        }
-        BOOST_CHECK_EQUAL(s.ShortestWay(tolik_id, arkash_id).size(), 2);
+
+        std::vector<std::size_t> exp = {1, 2};
+        auto a = s.ShortestWay(tolik_id, arkash_id);
+        BOOST_CHECK(a == exp);
     }
 
 BOOST_AUTO_TEST_SUITE_END();
