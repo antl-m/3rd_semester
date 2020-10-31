@@ -23,6 +23,14 @@ namespace SocialNet {
             posted.insert(post_id);
         }
 
+        void AddLiked(PostId post_id){
+            liked.insert(post_id);
+        }
+
+        void AddDisliked(PostId post_id){
+            disliked.insert(post_id);
+        }
+
     private:
         const UserId id;
         std::string name, surname;

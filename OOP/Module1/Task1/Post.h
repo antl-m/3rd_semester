@@ -18,13 +18,15 @@ namespace SocialNet {
              std::string content,
              std::unordered_set<Theme> themes,
              std::unordered_set<UserId> users_ref = {},
-             std::unordered_set<PostId> posts_ref = {}):
-                 id(id), author(author),
-                 content(std::move(content)),
-                 themes(std::move(themes)),
-                 users_ref(std::move(users_ref)),
-                 posts_ref(std::move(posts_ref)) {}
+             std::unordered_set<PostId> posts_ref = {});
+
+        void AddUsersRef(std::unordered_set<UserId> users_ref){
+            this->users_ref.merge(std::move(users_ref));
+        }
+
     private:
+        friend class Server;
+
         const PostId id;
         const UserId author;
         std::string content;

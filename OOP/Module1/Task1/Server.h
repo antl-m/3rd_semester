@@ -12,23 +12,27 @@ namespace SocialNet {
     public:
         Server() = default;
 
-        void AddUser(std::string name, std::string surname);
+        UserId AddUser(std::string name, std::string surname);
 
-        void UserAddPost(UserId author_id, std::string content,
-                     std::unordered_set<Theme> themes,
-                     std::unordered_set<UserId> users_ref = {},
-                     std::unordered_set<PostId> posts_ref = {});
-
-        void UserReplyPost(UserId user_id, PostId post_id,
-                           std::string content,
+        PostId UserAddPost(UserId author_id, std::string content,
                            std::unordered_set<Theme> themes,
                            std::unordered_set<UserId> users_ref = {},
                            std::unordered_set<PostId> posts_ref = {});
 
-        void UserRepostPost(UserId user_id, PostId post_id,
-                            std::unordered_set<UserId> users_ref);
+        PostId UserReplyPost(UserId user_id, PostId post_id,
+                             std::string content,
+                             std::unordered_set<Theme> themes,
+                             std::unordered_set<UserId> users_ref = {},
+                             std::unordered_set<PostId> posts_ref = {});
+
+        PostId UserRepostPost(UserId user_id, PostId post_id,
+                              std::unordered_set<UserId> users_ref);
 
         void UserLikePost(UserId user_id, PostId post_id);
+
+        void UserDislikePost(UserId user_id, PostId post_id);
+
+        std::vector<UserId> ShortestWay(UserId beg, UserId end) const;
 
     private:
         void check_user_id(UserId id, std::string message) const;
