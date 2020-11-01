@@ -34,7 +34,7 @@ int64_t f(Floating x) {
 
 template <typename CString, std::enable_if_t<is_cstring<CString>::value, int> = 0>
 int64_t f(CString x) {
-    const std::string vowels = "aeiouAEIOU";
+    static const std::string vowels = "aeiouAEIOU";
     int64_t res = 0;
     for(std::size_t i = 0; i < strlen(x); ++i){
         if(vowels.find(x[i]) != vowels.npos)
@@ -45,7 +45,7 @@ int64_t f(CString x) {
 
 template <typename String, std::enable_if_t<is_string<String>::value, int> = 0>
 int64_t f(String x) {
-    const std::string vowels = "aeiouAEIOU";
+    static const std::string vowels = "aeiouAEIOU";
     int64_t res = 0;
     for(const char i: x){
         if(vowels.find(i) != vowels.npos)
@@ -73,6 +73,5 @@ int64_t f(Container x){
     }
     return result % 757;
 }
-
 
 #endif //MODULE1_TASK2_F_H
