@@ -9,7 +9,7 @@ void sort(long long size);
 void random(long long size);
 
 int main() {
-    long long size = pow(2, 7);
+    long long size = pow(2, 20);
     random(size);
     auto start = std::chrono::steady_clock::now();
     sort(size);
