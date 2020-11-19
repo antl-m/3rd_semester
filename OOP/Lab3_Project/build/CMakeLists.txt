@@ -4,8 +4,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(PROJECT SFMLGame)
 set(SOURCES
-        ../src/main.cpp)
-set(HEADERS)
+        ../src/main.cpp
+        ../src/MainSceneWindow/MainSceneWindow.cpp)
+set(HEADERS
+        ../src/MainSceneWindow/MainSceneWindow.h)
 
 project(${PROJECT})
 
