@@ -21,8 +21,6 @@ namespace MyColors {
 }
 ***/
 namespace MyColors {
-//const inline sf::Color kPlayerColor(3, 167, 98);
-//const inline sf::Color kOpponentColor(237, 27, 36);
 const inline sf::Color kPlayerColor(104, 195, 152);
 const inline sf::Color kOpponentColor(244, 123, 112);
 const inline sf::Color kTileFillColor(178, 199, 230);
