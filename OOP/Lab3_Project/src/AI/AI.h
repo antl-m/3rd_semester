@@ -9,11 +9,14 @@ using Board = boost::adjacency_list<boost::hash_setS,
                                     boost::vecS,
                                     boost::undirectedS>;
 
+using BoardDesc = boost::graph_traits<Board>::vertex_descriptor;
+using BoardIt = boost::graph_traits<Board>::vertex_iterator;
+
 class AI {
  public:
   AI();
-  bool CheckWallValid(const Wall &wall);
-  bool CheckTurnValid(int x, int y);
+  bool TryPutWall(const Wall &wall);
+  bool TryMakeTurn(int x, int y);
  private:
   Board board_;
   Walls available_walls_;

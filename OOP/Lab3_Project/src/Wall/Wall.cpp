@@ -46,7 +46,7 @@ bool operator==(const Wall &lhs, const Wall &rhs) {
 }
 
 std::size_t Wall::Hasher::operator()(const Wall &wall) const {
-  auto t = static_cast<float>(wall.type_);
-  static const float seed = 524827;
+  auto t = static_cast<std::size_t>(wall.type_);
+  static constexpr std::size_t seed = 524827;
   return seed * seed * wall.x_ + seed * wall.y_ + t;
 }

@@ -42,10 +42,6 @@ void MainSceneWindow::Launch() {
   }
 }
 
-#include <iostream> //TODO:DELETE
-//TODO:DELETE
-#define LOG(X) std::cerr << #X << " = " << X << std::endl
-
 void MainSceneWindow::DisplayAll() {
   for (auto &tile: tiles_) {
     main_window_.draw(tile);
@@ -62,32 +58,23 @@ void MainSceneWindow::LeftMouseAction(sf::Vector2i pos) {
   int x = pos.x / 88;
   int y = pos.y / 88;
   if (pos.x % 88 > 8 && pos.y % 88 > 8) {
-    if(ai_.CheckTurnValid(x, y))
+    if(ai_.TryMakeTurn(x, y))
       player_.SetPosition(x, y);
   }
-//  LOG(player_.getPosition().x);
-//  LOG(player_.getPosition().y);
 }
 
 void MainSceneWindow::RightMouseAction(sf::Vector2i pos) {
-  //LOG(walls_.size());
-  //LOG(pos.x); //TODO:DELETE
-  //LOG(pos.y);
   int x = pos.x / 88;
   int y = pos.y / 88;
-  //LOG(x);
-  //LOG(y);
   if (x < 9 && y < 9) {
     if (y > 0 && x < 8 && (pos.x % 88) > 8 && (pos.y % 88) <= 8) {
       Wall wall(x, y, Wall::Type::Horizontal);
-      if (ai_.CheckWallValid(wall))
+      if (ai_.TryPutWall(wall))
         walls_.insert(wall);
-      //std::cerr << "Horizontal" << std::endl;
     } else if (y < 8 && x > 0 && (pos.x % 88) <= 8 && (pos.y % 88) > 8) {
       Wall wall(x, y, Wall::Type::Vertical);
-      if (ai_.CheckWallValid(wall))
+      if (ai_.TryPutWall(wall))
         walls_.insert(wall);
-      //std::cerr << "Vertical" << std::endl;
     }
   }
 }
