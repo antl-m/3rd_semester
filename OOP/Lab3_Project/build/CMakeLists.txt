@@ -16,7 +16,8 @@ set(HEADERS
         ../src/Colors/Colors.h
         ../src/Utility/Utility.h
         ../src/Wall/Wall.h
-        ../src/AI/AI.h)
+        ../src/AI/AI.h
+        ../src/Graph/Graph.h)
 
 project(${PROJECT})
 
@@ -25,9 +26,7 @@ find_package(SFML
         graphics
         REQUIRED)
 
-find_package(Boost
-        REQUIRED)
 
 add_executable(${PROJECT} ${SOURCES} ${HEADERS})
 
-target_link_libraries(${PROJECT} sfml-graphics sfml-audio Boost::boost)
+target_link_libraries(${PROJECT} sfml-graphics sfml-audio)

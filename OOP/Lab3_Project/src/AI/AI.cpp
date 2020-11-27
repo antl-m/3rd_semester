@@ -2,13 +2,21 @@
 
 #include "SFML/Graphics.hpp"
 
+#include <iostream>
+
 std::size_t Vertex(std::size_t x, std::size_t y) {
   return 9 * y + x;
 }
 
-bool AI::TryPutWall(const Wall &wall) {
+sf::Vector2i VertexToCoord(int vrt) {
+  return {vrt % 9, vrt / 9};
+}
 
-  return true;
+bool AI::TryPutWall(const Wall &wall) {
+  if (available_walls_.contains(wall)) {
+
+  }
+  return false;
 }
 
 bool AI::TryMakeTurn(int x, int y) {
@@ -16,7 +24,11 @@ bool AI::TryMakeTurn(int x, int y) {
 }
 
 AI::AI() :
-    board_(9 * 9) {
+    board_(9 * 9),
+    player_walls_reserve_(10),
+    opponent_walls_reserve_(10),
+    player_v_(Vertex(4, 8)),
+    opponent_v_(Vertex(4, 0)) {
   //Filling edges
   for (std::size_t x = 0; x < 9; ++x) {
     for (std::size_t y = 0; y < 8; ++y) {

@@ -8,6 +8,5 @@ int main() {
   std::cout << "2" << std::endl;
   scene_window.Launch();
   std::cout << "3" << std::endl;
-
   return 0;
 }
