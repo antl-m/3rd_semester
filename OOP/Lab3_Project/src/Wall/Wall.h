@@ -22,6 +22,8 @@ class Wall : public sf::RectangleShape {
   Wall(int x, int y, Type type);
   void Move(int x, int y);
   void SetType(Type type);
+  Type GetType() const;
+  std::pair<int, int> GetCoord() const;
 
  private:
   void Resize();

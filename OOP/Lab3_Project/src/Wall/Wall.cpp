@@ -7,6 +7,8 @@ Wall::Wall(int x, int y, Type type) :
     type_(type),
     x_(x), y_(y) {
   setFillColor(MyColors::kWallColor);
+  setOutlineThickness(2);
+  setOutlineColor(sf::Color::Black);
   Move(x_, y_);
   Resize();
 }
@@ -33,9 +35,6 @@ void Wall::Resize() {
 }
 
 sf::Vector2f Wall::CoordToWindow(int x, int y) {
-  //TODO:DELETE
-  assert(x >= 0 && x < 9);
-  assert(y >= 0 && y < 9);
   float x_f = x * 88;
   float y_f = y * 88;
   return sf::Vector2f(x_f, y_f);
@@ -43,6 +42,12 @@ sf::Vector2f Wall::CoordToWindow(int x, int y) {
 
 bool operator==(const Wall &lhs, const Wall &rhs) {
   return lhs.x_ == rhs.x_ && lhs.y_ == rhs.y_ && lhs.type_ == rhs.type_;
+}
+Wall::Type Wall::GetType() const{
+  return type_;
+}
+std::pair<int, int> Wall::GetCoord() const {
+  return {x_, y_};
 }
 
 std::size_t Wall::Hasher::operator()(const Wall &wall) const {

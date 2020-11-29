@@ -69,12 +69,16 @@ void MainSceneWindow::RightMouseAction(sf::Vector2i pos) {
   if (x < 9 && y < 9) {
     if (y > 0 && x < 8 && (pos.x % 88) > 8 && (pos.y % 88) <= 8) {
       Wall wall(x, y, Wall::Type::Horizontal);
-      if (ai_.TryPutWall(wall))
+      std::cerr<<x << ' ' << y << std::endl;
+      if (ai_.TryPutWall(wall)) {
         walls_.insert(wall);
+      }
     } else if (y < 8 && x > 0 && (pos.x % 88) <= 8 && (pos.y % 88) > 8) {
       Wall wall(x, y, Wall::Type::Vertical);
-      if (ai_.TryPutWall(wall))
+      std::cerr<<x << ' ' << y << std::endl;
+      if (ai_.TryPutWall(wall)) {
         walls_.insert(wall);
+      }
     }
   }
 }

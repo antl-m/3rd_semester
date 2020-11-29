@@ -11,6 +11,54 @@
 #include <type_traits>
 #include <algorithm>
 
+template<typename T>
+std::ostream &operator<<(std::ostream &out, const std::set<T> &s) {
+  out << "{ ";
+  bool first = true;
+  for (const auto &item: s) {
+    if (first) {
+      out << item;
+      first = false;
+    } else {
+      out << ", " << item;
+    }
+  }
+  out << " }";
+  return out;
+}
+
+template<typename T>
+std::ostream &operator<<(std::ostream &out, const std::vector<T> &v) {
+  out << "[ ";
+  bool first = true;
+  for (const auto &item: v) {
+    if (first) {
+      out << item;
+      first = false;
+    } else {
+      out << ", " << item;
+    }
+  }
+  out << " ]";
+  return out;
+}
+
+template<typename K, typename V>
+std::ostream &operator<<(std::ostream &out, const std::map<K, V> &m) {
+  out << "{ ";
+  bool first = true;
+  for (const auto &[key, val]: m) {
+    if (first) {
+      out << key << ": " << val;
+      first = false;
+    } else {
+      out << " ," << key << ": " << val;
+    }
+  }
+  out << " }";
+  return out;
+}
+
 class GraphExc : public std::logic_error {
  public:
   explicit GraphExc(const std::string &message) : std::logic_error(message) {}
@@ -20,30 +68,26 @@ template<class V, class E>
 class Graph {
  public:
   virtual void push_edge(const E &e, const V &v1, const V &v2) = 0;
+  virtual void pop_edge(const V &v1, const V &v2) = 0;
   virtual void push_vertex(const V &v) = 0;
   bool connectivity() const;
-  std::map<V, std::vector<E>> length(const V &v) const;
+  std::map<V, std::vector<V>> length(const V &v) const;
   virtual std::size_t size() const = 0;
   friend std::ostream &operator<<(std::ostream &out, const Graph<V, E> &g) {
     return g._print(out);
   }
 
  protected:
-
   virtual std::ostream &_print(std::ostream &out) const = 0;
-
   virtual V _get_by_pos(std::size_t pos) const = 0;
-
   virtual std::size_t _count_adjacent_to_v(const V &v) const = 0;
-
   virtual V _adjacent_to_v_by_pos(const V &v, std::size_t pos) const = 0;
-
   virtual E _edge_of(const V &v1, const V &v2) const = 0;
 };
 
 template<class V, class E>
-std::map<V, std::vector<E>> Graph<V, E>::length(const V &v) const {
-  std::map<V, std::vector<E>> v_to_dist;
+std::map<V, std::vector<V>> Graph<V, E>::length(const V &v) const {
+  std::map<V, std::vector<V>> v_to_dist;
   std::map<V, bool> v_to_mark;
   std::queue<V> q;
   q.push(v);
@@ -57,11 +101,12 @@ std::map<V, std::vector<E>> Graph<V, E>::length(const V &v) const {
         q.push(adj);
       }
       auto cur_dist = v_to_dist[cur];
-      cur_dist.push_back(this->_edge_of(cur, adj));
+      cur_dist.push_back(adj);
       if (v_to_dist[adj].empty() || cur_dist.size() < v_to_dist[adj].size())
         v_to_dist[adj] = cur_dist;
     }
   }
+  v_to_dist[v].clear();
   return v_to_dist;
 }
 
@@ -112,6 +157,7 @@ template<class V, class E>
 class LinkedGraph : public Graph<V, E> {
  public:
   void push_edge(const E &e, const V &v1, const V &v2) override;
+  void pop_edge(const V &v1, const V &v2) override;
   void push_vertex(const V &v) override;
 
  private:
@@ -141,6 +187,14 @@ void LinkedGraph<V, E>::push_edge(const E &e, const V &v1, const V &v2) {
   }
   link_struct[v1].insert({v2, e});
   link_struct[v2].insert({v1, e});
+}
+
+template<class V, class E>
+void LinkedGraph<V, E>::pop_edge(const V &v1, const V &v2) {
+  if (_check_edge(v1, v2)) {
+    link_struct[v1].erase(Node<V, E>{v2, E()});
+    link_struct[v2].erase(Node<V, E>{v1, E()});
+  }
 }
 
 template<class V, class E>
@@ -209,7 +263,6 @@ template<class V, class E>
 std::size_t LinkedGraph<V, E>::size() const {
   return link_struct.size();
 }
-
 template<class V, class E>
 std::ostream &LinkedGraph<V, E>::_print(std::ostream &out) const {
   return out << link_struct;
