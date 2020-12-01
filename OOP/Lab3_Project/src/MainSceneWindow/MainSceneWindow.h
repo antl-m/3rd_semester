@@ -14,9 +14,10 @@ class MainSceneWindow {
 
  private:
   void DisplayAll();
-  void LeftMouseAction(sf::Vector2i pos);
-  void RightMouseAction(sf::Vector2i pos);
-
+  bool LeftMouseAction(sf::Vector2i pos);
+  bool RightMouseAction(sf::Vector2i pos);
+  void MakeOpponentTurn();
+  void Restart();
  private:
   sf::ContextSettings settings_;
   sf::RenderWindow main_window_;

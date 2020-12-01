@@ -70,6 +70,7 @@ class Graph {
   virtual void push_edge(const E &e, const V &v1, const V &v2) = 0;
   virtual void pop_edge(const V &v1, const V &v2) = 0;
   virtual void push_vertex(const V &v) = 0;
+  virtual bool is_edge(const V &v1, const V &v2) const = 0;
   bool connectivity() const;
   std::map<V, std::vector<V>> length(const V &v) const;
   virtual std::size_t size() const = 0;
@@ -159,6 +160,7 @@ class LinkedGraph : public Graph<V, E> {
   void push_edge(const E &e, const V &v1, const V &v2) override;
   void pop_edge(const V &v1, const V &v2) override;
   void push_vertex(const V &v) override;
+  bool is_edge(const V &v1, const V &v2) const override;
 
  private:
   std::ostream &_print(std::ostream &out) const override;
@@ -200,6 +202,11 @@ void LinkedGraph<V, E>::pop_edge(const V &v1, const V &v2) {
 template<class V, class E>
 void LinkedGraph<V, E>::push_vertex(const V &v) {
   link_struct.insert({v, {}});
+}
+
+template<class V, class E>
+bool LinkedGraph<V, E>::is_edge(const V &v1, const V &v2) const {
+  return _check_edge(v1, v2);
 }
 
 template<class V, class E>
@@ -258,7 +265,6 @@ E LinkedGraph<V, E>::_edge_of(const V &v1, const V &v2) const {
   message << "_edge_of: no edge between " << v1 << " and " << v2 << ".";
   throw GraphExc(message.str());
 }
-
 template<class V, class E>
 std::size_t LinkedGraph<V, E>::size() const {
   return link_struct.size();

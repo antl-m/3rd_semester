@@ -29,4 +29,4 @@ find_package(SFML
 
 add_executable(${PROJECT} ${SOURCES} ${HEADERS})
 
-target_link_libraries(${PROJECT} sfml-graphics sfml-audio)
+target_link_libraries(${PROJECT} sfml-graphics)
