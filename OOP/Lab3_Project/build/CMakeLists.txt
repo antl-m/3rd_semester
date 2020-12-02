@@ -21,12 +21,14 @@ set(HEADERS
 
 project(${PROJECT})
 
+set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML
         COMPONENTS
         graphics
+        main
         REQUIRED)
 
 
-add_executable(${PROJECT} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT} WIN32 ${SOURCES} ${HEADERS})
 
-target_link_libraries(${PROJECT} sfml-graphics)
+target_link_libraries(${PROJECT} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} sfml-graphics sfml-main)
