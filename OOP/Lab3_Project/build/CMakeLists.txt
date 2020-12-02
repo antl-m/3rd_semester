@@ -17,7 +17,7 @@ set(HEADERS
         ../src/Utility/Utility.h
         ../src/Wall/Wall.h
         ../src/AI/AI.h
-        ../src/Graph/Graph.h)
+        ../src/Graph/Graph.h ../rsc/Fonts/MyFont.h)
 
 project(${PROJECT})
 
@@ -29,6 +29,6 @@ find_package(SFML
         REQUIRED)
 
 
-add_executable(${PROJECT} WIN32 ${SOURCES} ${HEADERS})
+add_executable(${PROJECT} WIN32 ${SOURCES} ${HEADERS} ../rsc/Fonts/Quicksand-Bold.ttf)
 
 target_link_libraries(${PROJECT} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} sfml-graphics sfml-main)
