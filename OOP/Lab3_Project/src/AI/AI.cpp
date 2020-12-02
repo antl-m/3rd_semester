@@ -112,8 +112,8 @@ bool AI::TryMakeTurn(int x, int y) {
 }
 
 AI::AI() :
-    player_walls_reserve_(999),
-    opponent_walls_reserve_(999),
+    player_walls_reserve_(1000),
+    opponent_walls_reserve_(1000),
     player_v_(Vertex(4, 8)),
     opponent_v_(Vertex(4, 0)),
     was_game_over_(false),
@@ -209,7 +209,7 @@ std::pair<int, std::vector<int>> AI::BestBenefitAndWay() {
 std::variant<sf::Vector2i, Wall> AI::OpponentTurn() {
   auto[max_benefit, best_way] = BestBenefitAndWay();
 
-  if (max_benefit <= 0 && opponent_walls_reserve_ > 0) {
+  if (/*max_benefit <= 0 && */opponent_walls_reserve_ > 0) {
     int best_w_x, best_w_y;
     Wall::Type best_w_t;
     int new_max_benefit = std::numeric_limits<int>::lowest();
@@ -279,4 +279,8 @@ void AI::PutOpponentWall(const Wall &w) {
 
 bool AI::WasGameOver() {
   return was_game_over_;
+}
+
+bool AI::PlayerWin() {
+  return player_win_;
 }

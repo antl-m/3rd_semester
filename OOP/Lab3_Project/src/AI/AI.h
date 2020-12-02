@@ -14,9 +14,10 @@ class AI {
   bool TryMakeTurn(int x, int y);
   std::variant<sf::Vector2i, Wall> OpponentTurn();
   bool WasGameOver();
- private:
-  bool CheckWall(const Wall &wall);
   bool CheckTurn(int x, int y);
+  bool PlayerWin();
+  bool CheckWall(const Wall &wall);
+ private:
   void PutWallToBoard(const Wall &wall);
   void TakeWallFromBoard(const Wall &wall);
   std::pair<int, std::vector<int>> BestBenefitAndWay();

@@ -15,9 +15,10 @@ class MainSceneWindow {
  private:
   void DisplayAll();
   bool LeftMouseAction(sf::Vector2i pos);
-  bool RightMouseAction(sf::Vector2i pos);
   void MakeOpponentTurn();
   void Restart();
+  void Preview(sf::Vector2i pos);
+  void GameOver();
  private:
   sf::ContextSettings settings_;
   sf::RenderWindow main_window_;
@@ -26,6 +27,10 @@ class MainSceneWindow {
   std::vector<sf::RectangleShape> tiles_;
   Walls walls_;
   AI ai_;
+  std::optional<Player> player_preview_;
+  std::optional<Wall> wall_preview_;
+  sf::Text game_over_text_;
+  sf::Font font_;
 };
 
 #endif //SFMLGAME_SRC_MAINSCENEWINDOW_MAINSCENEWINDOW_H_
