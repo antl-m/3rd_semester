@@ -1,6 +1,7 @@
 #include "MainSceneWindow.h"
 #include "../Colors/Colors.h"
 #include "../Utility/Utility.h"
+#include "../../rsc/Fonts/MyFont.h"
 
 MainSceneWindow::MainSceneWindow() :
     settings_(0, 0, 8),
@@ -19,7 +20,7 @@ MainSceneWindow::MainSceneWindow() :
     tile.move(CoordToWindow(i % 9, i / 9));
     ++i;
   }
-  font_.loadFromFile("../../rsc/Fonts/Quicksand-Bold.ttf");
+  font_.loadFromMemory(MyFont, MyFontSize);
   game_over_text_.setFont(font_);
   game_over_text_.setOutlineColor(sf::Color::Black);
   game_over_text_.setOutlineThickness(10);
